@@ -1,0 +1,83 @@
+---
+title: "med_test"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    css: styles.css
+runtime: shiny
+---
+
+
+```{r global, include=FALSE}
+
+# Loads necessary libraries and defines the UI of the app
+library(flexdashboard)
+library(ggplot2)
+library(shiny)
+library (DT)
+library (tidyverse)
+
+
+ui <- fluidPage(
+  
+  titlePanel("Iris Data Analysis"),
+  
+  fluidRow(
+    
+    column(width = 3, style = "height: 500px;" ,
+           selectInput("varname", 
+                       label = "Species:", 
+                       choices = c("All", levels(iris$Species)), selected = "All")),
+    
+    column(width = 9, 
+           dataTableOutput("table", height = "500px"))
+    
+  )
+)
+# Defines the server-side function that renders the data table based on user input
+server <- function(input, output) {
+  
+  output$table <- renderDataTable({
+    if(input$varname == "All") {
+      iris
+    } else {
+      iris[iris$Species == input$varname, ]
+    }
+  })
+  
+}
+```
+
+# dashboard
+
+## Column {data-width="500"}
+
+### Sepal
+
+```{r}
+# Creates a scatter plot of Sepal length and width, colored by species 
+ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point() +
+  labs(title = "Iris Dataset : Sepal", x = "Sepal Length", y = "Sepal Width")
+
+```
+
+## Column {data-width="500"}
+
+### Petal
+
+```{r}
+# Creates a scatter plot of Petal length and width, colored by species 
+ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point() +
+  labs(title = "Iris Dataset : Petal", x = "Petal Length", y = "Petal Width")
+
+```
+
+# table
+
+```{r}
+# Creates a Shiny app with the defined UI and server functions
+shinyApp(ui = ui, server = server)
+```

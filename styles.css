@@ -1,0 +1,32 @@
+/* Change the background color of the body */
+body {
+  background-color: #f2f2f2;
+}
+
+
+/* Change the font size and color of the headings */
+h1, h2, h3, h4, h5, h6 {
+  font-size: 24px;
+  color: #333333;
+}
+
+
+/* Sets the font size and alignment for the headings of the charts */
+.chart-title {
+  font-size: 30px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Change the font size of the text */
+p, label {
+  font-size: 16px;
+}
+
+/* Set a max width for the dashboard */
+.dashboard-body {
+  max-width: 1200px;
+  margin: 0 auto;
+}
